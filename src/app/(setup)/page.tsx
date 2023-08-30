@@ -1,6 +1,6 @@
 import { initialProfile } from "@/lib";
 import { serverByUser } from "@/services";
-import { CreateServerModal } from "@/components";
+import { InitialModal } from "@/components";
 
 const SetupPage = async () => {
   const profile = await initialProfile();
@@ -9,7 +9,7 @@ const SetupPage = async () => {
 
   return (
     <main>
-      <CreateServerModal />
+      <InitialModal />
     </main>
   );
 };

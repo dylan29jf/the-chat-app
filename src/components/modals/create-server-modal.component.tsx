@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
 import {
   Dialog,
@@ -25,26 +25,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { handleCreateServer } from "@/app/(setup)/services";
 import { FileUpload } from "@/components";
-
-
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Server name is required."
-  }),
-  imageUrl: z.string().min(1, {
-    message: "Server image is required."
-  })
-});
+import { useModal } from "@/hooks";
 
 const CreateServerModal: FC = () => {
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const { isOpen, onClose, type } = useModal();
+
+  const isModalOpen = isOpen && type === "createServer";
 
   const router = useRouter();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
 
   const form = useForm<z.infer<typeof initialServerSchema>>({
     resolver: zodResolver(initialServerSchema as any),
@@ -59,20 +47,21 @@ const CreateServerModal: FC = () => {
       await handleCreateServer(values);
       form.reset();
       router.refresh();
-      window.location.reload();
+      onClose();
     } catch (error) {
       console.error("[CREATE_SERVER_ERROR]", error);
     }
   };
 
   const isLoading = form.formState.isSubmitting;
-  
-  if (!isMounted) {
-    return null;
-  }
+
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
 
   return (
-    <Dialog open>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">

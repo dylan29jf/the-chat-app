@@ -48,3 +48,34 @@ export const getServerById = async (serverId: string, profileId: string) => {
 export const patchInvite = async (serverId: string) => {
   return await axios.patch(`/api/servers/${serverId}/invite-code`);
 };
+
+export const existingServerByInviteCode = async (
+  inviteCode: string,
+  profileId: string
+) => {
+  return await db.server.findFirst({
+    where: {
+      inviteCode,
+      members: {
+        some: {
+          profileId,
+        },
+      },
+    },
+  });
+};
+
+export const addNewMemberToServerByInviteCode = async (inviteCode: string) => {
+  return await db.server.update({
+    where: {
+      inviteCode,
+    },
+    data:{
+      members: {
+        create: [
+          
+        ]
+      }
+    }
+  });
+};
