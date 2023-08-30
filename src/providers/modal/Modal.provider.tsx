@@ -15,7 +15,7 @@ const ModalProvider: FC = () => {
   return (
     <>
       <CreateServerModal />
-      
+      <InviteModal />
     </>
   );
 };
