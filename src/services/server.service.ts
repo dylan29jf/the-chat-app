@@ -65,7 +65,7 @@ export const existingServerByInviteCode = async (
   });
 };
 
-export const addNewMemberToServerByInviteCode = async (inviteCode: string) => {
+export const addNewMemberToServerByInviteCode = async (inviteCode: string, profileId: string) => {
   return await db.server.update({
     where: {
       inviteCode,
@@ -73,7 +73,9 @@ export const addNewMemberToServerByInviteCode = async (inviteCode: string) => {
     data:{
       members: {
         create: [
-          
+          {
+            profileId
+          }
         ]
       }
     }
