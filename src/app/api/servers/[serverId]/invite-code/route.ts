@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
-import { MemberRole } from "@prisma/client";
 
 import { currentProfile } from "@/lib";
 import { db } from "@/db";
 
-export async function PATCH(req: Request, {params}: {params: {serverId: string}}) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { serverId: string } }
+) {
   try {
     const profile = await currentProfile();
 
@@ -16,15 +18,14 @@ export async function PATCH(req: Request, {params}: {params: {serverId: string}}
       return new NextResponse("Server Id Missing", { status: 400 });
     }
 
-    console.log({params})
     const server = await db.server.update({
       where: {
         id: params.serverId,
-        profileId: profile.id
+        profileId: profile.id,
       },
       data: {
-        inviteCode: uuidv4()
-      }
+        inviteCode: uuidv4(),
+      },
     });
 
     return NextResponse.json(server);
