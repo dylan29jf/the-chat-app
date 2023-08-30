@@ -2,6 +2,8 @@ export { default as ActionTooltip } from "./action-tooltip.component";
 export { default as ButtonModeToggle } from "./button-mode-toggle.component";
 export { default as CreateServerModal } from "./modals/create-server-modal.component";
 export { default as EditServerModal } from "./modals/edit-server-modal.component";
+export { default as LeaveServerModal } from "./modals/leave-server-modal.component";
+export { default as DeleteServerModal } from "./modals/delete-server-modal.component";
 export { default as InitialModal } from "./modals/initial-modal.component";
 export { default as InviteModal } from "./modals/invite-modal.component";
 export { default as MembersModal } from "./modals/members-modal.component";

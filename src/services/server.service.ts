@@ -65,19 +65,30 @@ export const existingServerByInviteCode = async (
   });
 };
 
-export const addNewMemberToServerByInviteCode = async (inviteCode: string, profileId: string) => {
+export const addNewMemberToServerByInviteCode = async (
+  inviteCode: string,
+  profileId: string
+) => {
   return await db.server.update({
     where: {
       inviteCode,
     },
-    data:{
+    data: {
       members: {
         create: [
           {
-            profileId
-          }
-        ]
-      }
-    }
+            profileId,
+          },
+        ],
+      },
+    },
   });
+};
+
+export const leaveServer = async (serverId: string) => {
+  return await axios.patch(`/api/servers/${serverId}/leave`);
+};
+
+export const deleteServer = async (serverId: string) => {
+  return await axios.delete(`/api/servers/${serverId}`);
 };
