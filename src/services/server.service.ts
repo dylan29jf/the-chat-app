@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/db";
 import { Server } from "@prisma/client";
+import axios from "axios";
 
 export const serverByUser = async (idUser: string): Promise<Server | any> => {
   const server = await db.server.findFirst({
@@ -42,4 +43,8 @@ export const getServerById = async (serverId: string, profileId: string) => {
       },
     },
   });
+};
+
+export const patchInvite = async (serverId: string) => {
+  return await axios.patch(`/api/servers/${serverId}/invite-code`);
 };
