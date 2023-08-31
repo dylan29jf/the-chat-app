@@ -36,7 +36,19 @@ export const getMemberById = async (serverId: string, profileId: string) => {
   return await db.member.findFirst({
     where: {
       serverId,
-      profileId
+      profileId,
+    },
+  });
+};
+
+export const getCurrentMember = async (serverId: string, profileId: string) => {
+  return await db.member.findFirst({
+    where: {
+      serverId,
+      profileId,
+    },
+    include: {
+      profile: true,
     },
   });
 };
