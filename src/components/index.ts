@@ -12,4 +12,5 @@ export { default as UserAvatar } from "./user-avatar.component";
 export { default as CreateChannelModal } from "./modals/create-channel-modal.component";
 export { default as EditChannelModal } from "./modals/edit-channel-modal.component";
 export { default as DeleteChannelModal } from "./modals/delete-channel-modal.component";
+export { default as MobileToggle } from "./mobile-toggle.component";
 export * from "./ui";

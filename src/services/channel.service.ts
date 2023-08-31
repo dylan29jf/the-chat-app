@@ -27,6 +27,39 @@ export const getChannelsById = async (serverId: string) => {
   });
 };
 
+export const getChannelById = async (channelId: string) =>
+  await db.channel.findUnique({
+    where: {
+      id: channelId,
+    },
+  });
+
+export const getInitialChannel = async (
+  serverId: string,
+  profileId: string
+) => {
+  return await db.server.findUnique({
+    where: {
+      id: serverId,
+      members: {
+        some: {
+          profileId,
+        },
+      },
+    },
+    include: {
+      channels: {
+        where: {
+          name: "general",
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+  });
+};
+
 export const createChannel = async (
   values: z.infer<typeof channelSchema>,
   serverId: string

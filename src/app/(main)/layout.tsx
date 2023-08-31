@@ -8,7 +8,7 @@ interface Props {
 const layout = async ({ children }: Props) => {
   return (
     <main className="h-full">
-      <aside className="flex h-full w-[72px] z-30 flex-col fixed inset-y-0">
+      <aside className="only-desktop h-full w-[72px] z-30 flex-col fixed inset-y-0">
         <NavigationSidebar />
       </aside>
       <section className="md:pl-[72px] h-full">{children}</section>

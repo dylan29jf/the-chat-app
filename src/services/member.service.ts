@@ -1,3 +1,4 @@
+import { db } from "@/db";
 import { MemberRole } from "@prisma/client";
 import axios from "axios";
 import qs from "query-string";
@@ -29,4 +30,13 @@ export const deleteMemberToServer = async (
   });
 
   return await axios.delete(url);
+};
+
+export const getMemberById = async (serverId: string, profileId: string) => {
+  return await db.member.findFirst({
+    where: {
+      serverId,
+      profileId
+    },
+  });
 };
