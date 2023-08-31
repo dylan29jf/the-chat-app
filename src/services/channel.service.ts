@@ -40,9 +40,27 @@ export const createChannel = async (
   return await axios.post(url, values);
 };
 
-// export const handleEditServer = async (
-//   values: z.infer<typeof initialServerSchema>,
-//   serverId: string
-// ) => {
-//   return await axios.patch(`/api/servers/${serverId}`, values);
-// };
+export const editChannel = async (
+  values: z.infer<typeof channelSchema>,
+  channelId: string,
+  serverId: string
+) => {
+  const url = qs.stringifyUrl({
+    url: `/api/channels/${channelId}`,
+    query: {
+      serverId: serverId,
+    },
+  });
+  return await axios.patch(url, values);
+};
+
+export const deleteChannel = async (channelId: string, serverId: string) => {
+  const url = qs.stringifyUrl({
+    url: `/api/channels/${channelId}`,
+    query: {
+      serverId: serverId,
+    },
+  });
+
+  return await axios.delete(url);
+};

@@ -10,4 +10,6 @@ export { default as MembersModal } from "./modals/members-modal.component";
 export { default as FileUpload } from "./file-upload.component";
 export { default as UserAvatar } from "./user-avatar.component";
 export { default as CreateChannelModal } from "./modals/create-channel-modal.component";
+export { default as EditChannelModal } from "./modals/edit-channel-modal.component";
+export { default as DeleteChannelModal } from "./modals/delete-channel-modal.component";
 export * from "./ui";

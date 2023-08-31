@@ -29,16 +29,16 @@ import {
 } from "@/components";
 import { useModal } from "@/hooks";
 import { channelSchema } from "@/schemas";
-import { createChannel } from "@/services";
+import { editChannel } from "@/services";
 
-const CreateChannelModal: FC = () => {
+const EditChannelModal: FC = () => {
   const { isOpen, onClose, type, data } = useModal();
 
   const { serverId } = useParams();
 
-  const isModalOpen = isOpen && type === "createChannel";
+  const isModalOpen = isOpen && type === "editChannel";
 
-  const { channelType } = data;
+  const { channel } = data;
 
   const router = useRouter();
 
@@ -46,26 +46,25 @@ const CreateChannelModal: FC = () => {
     resolver: zodResolver(channelSchema as any),
     defaultValues: {
       name: "",
-      type: channelType || ChannelType.TEXT,
+      type: channel?.type ?? ChannelType.TEXT,
     },
   });
 
   useEffect(() => {
-    if (channelType) {
-      form.setValue("type", channelType);
-    } else {
-      form.setValue("type", ChannelType.TEXT);
+    if (channel) {
+      form.setValue("name", channel.name);
+      form.setValue("type", channel.type);
     }
-  }, [channelType, form]);
+  }, [channel, form]);
 
   const onSubmit = async (values: z.infer<typeof channelSchema>) => {
     try {
-      await createChannel(values, (serverId as string) ?? "");
+      await editChannel(values, channel?.id!, (serverId as string) ?? "");
       form.reset();
       router.refresh();
       onClose();
     } catch (error) {
-      console.error("[CREATE_CHANNEL_ERROR]", error);
+      console.error("[EDIT_CHANNEL_ERROR]", error);
     }
   };
 
@@ -81,7 +80,7 @@ const CreateChannelModal: FC = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create Channel
+            Edit Channel
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -142,7 +141,7 @@ const CreateChannelModal: FC = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button disabled={isLoading} variant={"primary"} type="submit">
-                Create
+                Save
               </Button>
             </DialogFooter>
           </form>
@@ -151,4 +150,4 @@ const CreateChannelModal: FC = () => {
     </Dialog>
   );
 };
-export default CreateChannelModal;
+export default EditChannelModal;

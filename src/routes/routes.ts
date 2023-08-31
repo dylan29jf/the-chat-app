@@ -1,4 +1,5 @@
 export enum Routes {
     HOME = '/',
-    SERVERS = '/servers'
+    SERVERS = '/servers',
+    CHANNELS = '/channels'
 }
