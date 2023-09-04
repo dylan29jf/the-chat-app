@@ -11,6 +11,7 @@ import {
   InviteModal,
   LeaveServerModal,
   MembersModal,
+  MessageFileModal,
 } from "@/components";
 
 const ModalProvider: FC = () => {
@@ -33,6 +34,7 @@ const ModalProvider: FC = () => {
       <DeleteChannelModal />
       <InviteModal />
       <MembersModal />
+      <MessageFileModal />
     </>
   );
 };

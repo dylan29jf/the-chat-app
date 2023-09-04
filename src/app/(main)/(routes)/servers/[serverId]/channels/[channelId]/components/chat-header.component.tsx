@@ -1,4 +1,4 @@
-import { MobileToggle, UserAvatar } from "@/components";
+import { MobileToggle, SocketIndicator, UserAvatar } from "@/components";
 import { Hash } from "lucide-react";
 import { FC } from "react";
 
@@ -12,16 +12,20 @@ interface Props {
 const ChatHeader: FC<Props> = ({ name, serverId, type, imageUrl }) => {
   return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
-      <MobileToggle  serverId={serverId}/>
+      <MobileToggle serverId={serverId} />
       {type === "channel" && (
         <Hash className="w-5 h-5 text-zinc-500 dark:text-zinc-400 mr-2" />
       )}
       {type === "conversation" && (
-        <UserAvatar src={imageUrl} className="h-8 w-8 md:h-8 md:w-8 mr-2"/>
+        <UserAvatar src={imageUrl} className="h-8 w-8 md:h-8 md:w-8 mr-2" />
       )}
       <p className="font-semibold text-base text-black dark:text-white">
         {name}
       </p>
+
+      <div className="ml-auto fle items-center">
+        <SocketIndicator />
+      </div>
     </div>
   );
 };
