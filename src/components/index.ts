@@ -15,4 +15,5 @@ export { default as DeleteChannelModal } from "./modals/delete-channel-modal.com
 export { default as MessageFileModal } from "./modals/message-file-modal.component";
 export { default as MobileToggle } from "./mobile-toggle.component";
 export { default as SocketIndicator } from "./socket-indicator.component";
+export { default as EmojiPicker } from "./emoji-picker.component";
 export * from "./ui";

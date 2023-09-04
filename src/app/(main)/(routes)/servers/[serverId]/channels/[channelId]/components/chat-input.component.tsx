@@ -1,6 +1,6 @@
 "use client";
 
-import { Form, FormControl, FormField, FormItem, Input } from "@/components";
+import { EmojiPicker, Form, FormControl, FormField, FormItem, Input } from "@/components";
 import { useModal } from "@/hooks";
 import { messageSchema } from "@/schemas";
 import { newMessage } from "@/services";
@@ -34,6 +34,8 @@ const ChatInput: FC<Props> = ({ apiUrl, name, query, type }) => {
   const handleSubmit = async (values: z.infer<typeof messageSchema>) => {
     try {
       await newMessage(values, apiUrl, query);
+      form.reset()
+      router.refresh()
     } catch (error) {
       console.error("[NEW_MESSAGE_ERROR]",error);
     }
@@ -65,9 +67,9 @@ const ChatInput: FC<Props> = ({ apiUrl, name, query, type }) => {
                     {...field}
                   />
                   <div className="absolute top-7 right-8">
-                    {/* <EmojiPicker
+                    <EmojiPicker
                     onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
-                  /> */}
+                  />
                   </div>
                 </div>
               </FormControl>
