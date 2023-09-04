@@ -2,7 +2,12 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { ModalProvider, SocketProvider, ThemeProvider } from "@/providers";
+import {
+  ModalProvider,
+  QueryProvider,
+  SocketProvider,
+  ThemeProvider,
+} from "@/providers";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -27,7 +32,7 @@ export default function RootLayout({
           >
             <SocketProvider>
               <ModalProvider />
-              {children}
+              <QueryProvider>{children}</QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>

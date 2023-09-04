@@ -31,3 +31,34 @@ export const newMessageFile = async (
     content: values.fileUrl,
   });
 };
+
+interface EditMessageProps {
+  socketUrl?: string;
+  id?: string;
+  socketQuery: any;
+  values: z.infer<typeof messageSchema>;
+}
+
+export const editMessage = async ({
+  socketUrl,
+  id,
+  socketQuery,
+  values,
+}: EditMessageProps) => {
+  const url = qs.stringifyUrl({
+    url: `${socketUrl}/${id}`,
+    query: socketQuery,
+  });
+
+  return await axios.patch(url, values);
+};
+
+
+export const deleteMessage = async (apiUrl?: string, query?: any) => {
+  const url = qs.stringifyUrl({
+    url: apiUrl ?? "",
+    query,
+  });
+
+  await axios.delete(url);
+} 

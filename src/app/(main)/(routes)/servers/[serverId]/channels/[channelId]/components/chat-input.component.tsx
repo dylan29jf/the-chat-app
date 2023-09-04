@@ -64,6 +64,7 @@ const ChatInput: FC<Props> = ({ apiUrl, name, query, type }) => {
                     placeholder={`Message ${
                       type === "conversation" ? name : "#" + name
                     }`}
+                    autoComplete="off"
                     {...field}
                   />
                   <div className="absolute top-7 right-8">
