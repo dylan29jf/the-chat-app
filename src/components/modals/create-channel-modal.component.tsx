@@ -34,7 +34,7 @@ import { createChannel } from "@/services";
 const CreateChannelModal: FC = () => {
   const { isOpen, onClose, type, data } = useModal();
 
-  const { serverId } = useParams();
+  const params = useParams();
 
   const isModalOpen = isOpen && type === "createChannel";
 
@@ -60,7 +60,7 @@ const CreateChannelModal: FC = () => {
 
   const onSubmit = async (values: z.infer<typeof channelSchema>) => {
     try {
-      await createChannel(values, (serverId as string) ?? "");
+      await createChannel(values, (params?.serverId as string) ?? "");
       form.reset();
       router.refresh();
       onClose();

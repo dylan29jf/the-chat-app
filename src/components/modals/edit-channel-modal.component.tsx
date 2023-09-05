@@ -34,7 +34,7 @@ import { editChannel } from "@/services";
 const EditChannelModal: FC = () => {
   const { isOpen, onClose, type, data } = useModal();
 
-  const { serverId } = useParams();
+  const params = useParams();
 
   const isModalOpen = isOpen && type === "editChannel";
 
@@ -59,7 +59,7 @@ const EditChannelModal: FC = () => {
 
   const onSubmit = async (values: z.infer<typeof channelSchema>) => {
     try {
-      await editChannel(values, channel?.id!, (serverId as string) ?? "");
+      await editChannel(values, channel?.id!, (params?.serverId as string) ?? "");
       form.reset();
       router.refresh();
       onClose();
