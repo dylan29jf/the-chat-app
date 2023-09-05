@@ -1,6 +1,13 @@
 "use client";
 
+import { FC, useEffect, useState } from "react";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import { Member, MemberRole, Profile } from "@prisma/client";
 import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 import {
   ActionTooltip,
   Button,
@@ -14,14 +21,8 @@ import {
 import { useModal } from "@/hooks";
 import { cn } from "@/lib";
 import { messageSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Member, MemberRole, Profile } from "@prisma/client";
-import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
-import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
-import { FC, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { editMessage } from "@/services";
+import { Routes } from "@/routes";
 
 interface Props {
   id: string;
@@ -73,7 +74,9 @@ const ChatItem: FC<Props> = ({
       return;
     }
 
-    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+    router.push(
+      `${Routes.SERVERS}/${params?.serverId}${Routes.CONVERSATIONS}/${member.id}`
+    );
   };
 
   useEffect(() => {
@@ -96,14 +99,14 @@ const ChatItem: FC<Props> = ({
       form.reset();
       setIsEditing(false);
     } catch (error) {
-      console.log("[FORM_EDIT_MESSAGE]",error);
+      console.log("[FORM_EDIT_MESSAGE]", error);
     }
   };
 
   useEffect(() => {
     form.reset({
       content,
-    })
+    });
   }, [content, form]);
 
   const fileType = fileUrl?.split(".").pop();
@@ -119,13 +122,19 @@ const ChatItem: FC<Props> = ({
   return (
     <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
       <div className="group flex gap-x-2 items-start w-full">
-        <div onClick={onMemberClick} className="cursor-pointer hover:drop-shadow-md transition ">
+        <div
+          onClick={onMemberClick}
+          className="cursor-pointer hover:drop-shadow-md transition "
+        >
           <UserAvatar src={member.profile.imageUrl} />
         </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
-              <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
+              <p
+                onClick={onMemberClick}
+                className="font-semibold text-sm hover:underline cursor-pointer"
+              >
                 {member.profile.name}
               </p>
               <ActionTooltip label={member.role}>

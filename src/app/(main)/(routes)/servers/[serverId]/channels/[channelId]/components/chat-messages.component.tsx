@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { Member, Message, Profile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
 import { ChatItem, ChatWelcome } from ".";
-import { useChatQuery } from "@/hooks";
+import { useChatQuery, useChatSocket } from "@/hooks";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -43,6 +43,8 @@ const ChatMessages: FC<Props> = ({
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useChatQuery({ queryKey, apiUrl, paramKey, paramValue });
+
+  useChatSocket({ addKey, queryKey, updateKey });
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
@@ -112,7 +114,7 @@ const ChatMessages: FC<Props> = ({
             ))}
           </Fragment>
         ))}
-      </div> 
+      </div>
       <div ref={bottomRef} />
     </div>
   );
