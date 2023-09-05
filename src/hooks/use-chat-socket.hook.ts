@@ -82,5 +82,5 @@ export const useChatSocket = ({
       socket.off(addKey);
       socket.off(updateKey);
     };
-  }, [queryClient, addKey, queryClient, socket, updateKey]);
+  }, [queryClient, addKey, queryKey, socket, updateKey]);
 };
