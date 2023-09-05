@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { Member, Message, Profile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
 import { ChatItem, ChatWelcome } from ".";
-import { useChatQuery, useChatSocket } from "@/hooks";
+import { useChatQuery, useChatScroll, useChatSocket } from "@/hooks";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -49,6 +49,14 @@ const ChatMessages: FC<Props> = ({
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
 
+  useChatScroll({
+    bottomRef,
+    chatRef,
+    loadMore: fetchNextPage,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
+    count: data?.pages?.[0].length ?? 0,
+  });
+
   if (status === "loading") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
@@ -73,14 +81,10 @@ const ChatMessages: FC<Props> = ({
 
   return (
     <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
-      {/* {!hasNextPage && (*/}
-      <div className="flex-1" />
-      {/* )} */}
+      {!hasNextPage && <div className="flex-1" />}
 
-      {/* {!hasNextPage && ( */}
-      <ChatWelcome type={type} name={name} />
-      {/* )} */}
-      {/* {hasNextPage && (
+      {!hasNextPage && <ChatWelcome type={type} name={name} />}
+      {hasNextPage && (
         <div className="flex justify-center">
           {isFetchingNextPage ? (
             <Loader2 className="h-6 w-6 text-zinc-500 animate-spin my-4" />
@@ -93,7 +97,7 @@ const ChatMessages: FC<Props> = ({
             </button>
           )}
         </div>
-          )}*/}
+      )}
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
