@@ -17,4 +17,5 @@ export { default as DeleteMessageModal } from "./modals/delete-message-modal.com
 export { default as MobileToggle } from "./mobile-toggle.component";
 export { default as SocketIndicator } from "./socket-indicator.component";
 export { default as EmojiPicker } from "./emoji-picker.component";
+export { default as MediaRoom } from "./media-room.component";
 export * from "./ui";

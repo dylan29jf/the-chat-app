@@ -1,6 +1,7 @@
 import { MobileToggle, SocketIndicator, UserAvatar } from "@/components";
 import { Hash } from "lucide-react";
 import { FC } from "react";
+import { ChatVideoButton } from ".";
 
 interface Props {
   serverId: string;
@@ -24,6 +25,9 @@ const ChatHeader: FC<Props> = ({ name, serverId, type, imageUrl }) => {
       </p>
 
       <div className="ml-auto fle items-center">
+        {type === "conversation" && (
+          <ChatVideoButton />
+        )}
         <SocketIndicator />
       </div>
     </div>

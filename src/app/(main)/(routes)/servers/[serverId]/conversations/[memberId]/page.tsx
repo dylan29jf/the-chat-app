@@ -9,6 +9,7 @@ import {
   ChatInput,
   ChatMessages,
 } from "../../channels/[channelId]/components";
+import { MediaRoom } from "@/components";
 
 interface Params {
   memberId: string;
@@ -17,11 +18,14 @@ interface Params {
 
 interface Props {
   params: Params;
+  searchParams: {
+    video?: boolean;
+  };
 }
 
 const SOCKET_URL = "/api/socket/direct-messages";
 
-const MemberIdPage: NextPage<Props> = async ({ params }) => {
+const MemberIdPage: NextPage<Props> = async ({ params, searchParams }) => {
   const profile = await currentProfile();
 
   if (!profile) return redirectToSignIn();
@@ -52,28 +56,37 @@ const MemberIdPage: NextPage<Props> = async ({ params }) => {
         serverId={params.serverId}
         type="conversation"
       />
-      <ChatMessages
-        member={currentMember}
-        name={otherMember.profile.name}
-        chatId={conversation.id}
-        type="conversation"
-        apiUrl="/api/direct-messages"
-        paramKey="conversationId"
-        paramValue={conversation.id}
-        socketUrl={SOCKET_URL}
-        socketQuery={{
-          conversationId: conversation.id,
-        }}
-      />
 
-      <ChatInput
-        name={otherMember.profile.name}
-        type="conversation"
-        apiUrl={SOCKET_URL}
-        query={{
-          conversationId: conversation.id,
-        }}
-      />
+      {searchParams.video && (
+        <MediaRoom chatId={conversation.id} audio={true} video={true} />
+      )}
+
+      {!searchParams.video && (
+        <>
+          <ChatMessages
+            member={currentMember}
+            name={otherMember.profile.name}
+            chatId={conversation.id}
+            type="conversation"
+            apiUrl="/api/direct-messages"
+            paramKey="conversationId"
+            paramValue={conversation.id}
+            socketUrl={SOCKET_URL}
+            socketQuery={{
+              conversationId: conversation.id,
+            }}
+          />
+
+          <ChatInput
+            name={otherMember.profile.name}
+            type="conversation"
+            apiUrl={SOCKET_URL}
+            query={{
+              conversationId: conversation.id,
+            }}
+          />
+        </>
+      )}
     </div>
   );
 };
